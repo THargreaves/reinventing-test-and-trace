@@ -1,0 +1,84 @@
+---
+title: "Model Prototype"
+output: html_notebook
+---
+
+```{r imports}
+library(dplyr)
+library(purrr)
+library(rstan)
+```
+
+```{r multiproccessing}
+options(mc.cores = parallel::detectCores())
+```
+
+```{r parameters}
+P <- 10
+N <- 10 ^ 3
+```
+
+```{r groundtruth}
+set.seed(1729)
+true_transmission <- rbeta(P, 1, 10)
+true_occurence <- rbeta(P, 1, 10)
+```
+
+```{r data}
+X <- pmap_dfc(list(true_occurence, true_transmission, 1:P), function(x, y, z) {
+  occurence <- rbinom(N, 1, x)
+  transmission <- occurence * rbinom(N, 1, y)
+  tibble(O = occurence, T = transmission) %>%
+    rename_all(~paste0(., z))
+})
+
+z <- X %>%
+  select(starts_with('T')) %>%
+  rowSums()
+
+X <- X %>%
+  select(starts_with('O'))
+y <- as.integer(z > 0)
+```
+
+```{stan model, output.var="mod"}
+data {
+  int<lower=0> N;                            // number of observations
+  int<lower=0> P;                            // number of places
+  int<lower=0, upper=1> X[N,P];              // activity occurrences
+  int<lower=0, upper=1> y[N];                // transmission (tested positive)
+}
+parameters {
+  real<lower=0, upper=1> theta[P];           // transmission rates
+  real<lower=0, upper=1> rho;                // underlying risk
+}
+model {
+  // Priors
+  theta ~ uniform(0, 1);
+  rho ~ uniform(0, 1);
+  // Likelihood
+  for (n in 1:N) {
+    real s = 0.0;
+    for (p in 1:P) {
+      if (X[n,p] == 1) {
+        s += log1m(theta[p]);
+      }
+    }
+    if (y[n] == 1) {
+      target += log1m_exp(s);
+    } else {
+      target += s;
+    }
+  }
+}
+```
+
+```{r fit, results='hide'}
+fit <- sampling(mod, data = list(N = N, P = P, X = X, y = y),
+                iter = 20000, chains = 8)
+```
+
+```{r eval}
+print(fit, probs = c(0.1, 0.9))
+print(true_transmission)
+```
