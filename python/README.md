@@ -9,7 +9,7 @@
 - Base model: Models setting-specific transmission rates, with underlying base rate.
 - Resampling model: Resamples simulated data into a T&T-like sample and a random survey that records activities only.
 - Imperfect tests model: Introduces imperfect tests with false poisitive/negative results.
-- Multilevel model: Introduces hierarchical structure to model class-specific transmission rates, with individual setting nested within classes.
+- Multilevel model: Introduces hierarchical structure to model class-specific transmission rates, with settings nested within classes.
 - TFP prototype: Base model implemented using TensorFlow Probability.
 
  
