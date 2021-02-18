@@ -6,10 +6,10 @@
 4. Open example notebook in Jupyter using newly installed kernel
 
 ## Prototype overview
-- Stan prototype 1: Setting-specific transmission rates, with underlying base rate.
-- Stan prototype 2: Setting-specific transmission rates, with underlying base rate and T&T resampling.
-- Stan prototype 3: Setting-specific transmission rates, with underlying base rate, T&T resampling, and false poisitive/negative test results.
-- Multilevel model: 
-- Tensorflow prototype: Setting-specific transmission rates, with underlying base rate.
+- Base model: Models setting-specific transmission rates, with underlying base rate.
+- Resampling model: Resamples data simulated for the base model into a T&T-like sample and a random survey that records activities only.
+- Imperfect tests model: Keeps T&T resampling and introduces imperfect tests with false poisitive/negative results.
+- Multilevel model: Introduces hierarchical structure to model class-specific transmission rates, where individual settings belong to a particular class.
+- TFP prototype: Base model implemented using TensorFlow Probability.
 
  
