@@ -55,7 +55,7 @@ class Posetrior:
 
 def runtime_lineplot(model_name, N_space):
     # Plots model runtime as function of fitting sample size
-    if model_type == 'tt_base':
+    if model_name == 'tt_base':
         
     
 def runtime_lineplot(self, P_space):    
