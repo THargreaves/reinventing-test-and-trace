@@ -3,6 +3,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import pystan
 import arviz as arvz
+
+from models import BaseModel
 np.random.seed(SEED)
 
 # Note: To comply with upcoming version of PyStan syntax (without model_name attribute) 
@@ -50,26 +52,22 @@ class Posetrior:
             X = X.loc[:, X.columns.str.startswith('O')]
             return {'N': N, 'P': P, 'X': X.to_numpy(), 'y': y.to_numpy()}
         
-class Diagnostic:
+
+def runtime_lineplot(model_name, N_space):
+    # Plots model runtime as function of fitting sample size
+    if model_type == 'tt_base':
+        
     
-    def __init__(self, model, name):
-        self.model = model
-        self.name = name
-        
-        
-    def runtime_lineplot(self, N_space):
-        # Plots model runtime as function of fitting sample size
-        
-    def runtime_lineplot(self, P_space):    
-        # Plots runtime as function of theta vector dimension
-        
-    def convergence_lineplot(self, N_space):
-        # Plots model co as function of fitting sample size
-        
-    def convergence_lineplot(self, P_space):
-        # Plots runtime as a function of the number of thetas to estimate    
-        
-    def mse_lineplot(self, P_space):
+def runtime_lineplot(self, P_space):    
+    # Plots runtime as function of theta vector dimension
+    
+def convergence_lineplot(self, N_space):
+    # Plots model co as function of fitting sample size
+    
+def convergence_lineplot(self, P_space):
+    # Plots runtime as a function of the number of thetas to estimate    
+    
+def mse_lineplot(self, P_space):
         # Plots runtime as a function of the number of thetas to estimate
         
         
