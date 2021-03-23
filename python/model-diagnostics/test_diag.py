@@ -6,7 +6,7 @@ print('instantiation successful')
 
 mod.simulate_data(N=10**4, P=6)
 print('data simulation successful')
-mod.run(iterations=500, warmup_iterations=500, chains=1)
+mod.run(iterations=100, warmup_iterations=500, chains=4)
 print('running successful')
 
 print(mod.runtime)
