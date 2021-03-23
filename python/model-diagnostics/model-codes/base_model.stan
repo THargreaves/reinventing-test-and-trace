@@ -9,8 +9,8 @@ parameters {
   real<lower=0, upper=1> theta[P];           // transmission rates
   real<lower=0, upper=1> rho;                // underlying risk
 }
-model {
-  // Precomputation
+transformed parameters {
+// Precomputation
   real log1m_theta[P];
   real log1m_rho;
   
@@ -19,7 +19,8 @@ model {
   }
 
   log1m_rho = log1m(rho);
-    
+}
+model {
   // Priors
   theta ~ uniform(0, 1);
   rho ~ uniform(0, 1);

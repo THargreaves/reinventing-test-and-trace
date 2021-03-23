@@ -54,7 +54,7 @@ class BaseModel:
 
     
     
-class FinalModel:
+class FinalModel(BaseModel):
     def __init__ (self):
         self.model = pystan.StanModel('Desktop/GitHub/reinventing-test-and-trace-r/python/model-diagnostics/model-codes/final_model.stan')
         self.ground_truth = None
@@ -148,7 +148,13 @@ class FinalModel:
         # Record classes
         c = np.array([i + 1 for i, p in enumerate(P) for __ in range(p)])
         
-        
+        self.ground_truth = {'true_theta': true_transmission_rate, 
+                             'true_mu': true_transmission_rate_mu,
+                             'true_sigma2': true_transmission_rate_std**2,
+                             'true_gamma': true_gamma,
+                             'true_lambda': true_lambda,
+                             'true_iota': np.log(true_mask_impact),
+                             'true_rho':base_rate}
         # Define model data
         self.data = {
             'N': N, 'NA': NA, 'P': sum(P), 'K': len(P),
