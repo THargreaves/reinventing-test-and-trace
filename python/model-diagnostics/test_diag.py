@@ -1,14 +1,10 @@
+import diagnostics
 from models import BaseModel
 
 
 mod = BaseModel()
 print('instantiation successful')
-
-mod.simulate_data(N=10**4, P=6)
-print('data simulation successful')
-mod.run(iterations=1000, warmup_iterations=500, chains=4)
-print('running successful')
-
-print(mod.runtime)
-print(mod.mse)
-print('absolute win')
+a = 10**4
+Ns = [5*(10**5), a, 5*a, 10*a,50*a ,100*a]
+diagnostics.runtime_lineplot_N(mod, N_space = Ns, P = 4)
+print('ahuevooooooooo')

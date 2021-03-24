@@ -5,12 +5,12 @@ import pystan
 import arviz as arvz
 
 from models import BaseModel
-np.random.seed(SEED)
+np.random.seed(23)
 
 
 
 
-def runtime_lineplot(model, N_space, P=4):
+def runtime_lineplot_N(model, N_space, P=4):
     """
     Plots model runtime as a function of the number of fitting samples
     Saves plot as .png file
@@ -23,7 +23,7 @@ def runtime_lineplot(model, N_space, P=4):
     for i in N_space:
         runtimes = []
         model.simulate_data(i,P)
-        model.run()
+        model.run(iterations=1000, warmup_iterations=500, chains=4)
         runtimes.append(model.runtime)
     
     fig, ax = plt.subplots()
@@ -69,14 +69,14 @@ def runtime_lineplot(model, P_space, N = 5000):
     
     
 def convergence_lineplot(model, N_space):
-    
+    pass
     
     
     
     
 def convergence_lineplot(model, P_space):
     # Plots runtime as a function of the number of thetas to estimate
-    
+    pass
     
     
     
@@ -103,18 +103,13 @@ def mse_lineplot(model, N_space, P=4):
     fig.tight_layout()
     plt.savefig('runtime_P_plot.png')
     plt.show()
-
-    runtime_P_plot.png')
-    plt.show()
-    
-    
-    
-    
     
     
 def mse_lineplot(model, P_space):
+    pass
     
-def mape_lineplot(model, N_space):    
+def mape_lineplot(model, N_space):
+    pass
         
         
     
