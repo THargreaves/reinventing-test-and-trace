@@ -20,8 +20,8 @@ def runtime_lineplot_N(model, N_space, P=4):
     
     """ 
     N_space = np.sort(np.array(N_space))
+    runtimes = []
     for i in N_space:
-        runtimes = []
         model.simulate_data(i,P)
         model.run(iterations=1000, warmup_iterations=500, chains=4)
         runtimes.append(model.runtime)
@@ -48,8 +48,8 @@ def runtime_lineplot(model, P_space, N = 5000):
     
     """ 
     P_space = np.sort(np.array(P_space))
+    runtimes = []
     for i in P_space:
-        runtimes = []
         model.simulate_data(N,i)
         model.run()
         runtimes.append(model.runtime)
@@ -89,8 +89,8 @@ def mse_lineplot(model, N_space, P=4):
     
     """ 
     N_space = np.sort(np.array(N_space))
+    runtimes = []
     for i in N_space:
-        runtimes = []
         model.simulate_data(i,P)
         model.run()
         runtimes.append(model.runtime)
