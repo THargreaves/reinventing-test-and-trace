@@ -2,7 +2,7 @@ import time
 import arviz
 import numpy as np
 import pandas as pd
-import pystan
+import stan
 
 class BaseModel:
     def __init__ (self):
