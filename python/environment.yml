@@ -4,11 +4,13 @@ channels:
   - defaults
 dependencies:
   - python=3.8
-  - pystan=2
+  - pip
   - numpy
   - matplotlib
   - pandas
   - seaborn
   - scikit-learn
   - ipykernel
+  - pip:
+      - pystan
 
