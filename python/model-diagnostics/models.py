@@ -6,7 +6,7 @@ import stan
 
 class BaseModel:
     def __init__ (self):
-        self.model = pystan.StanModel('Desktop/GitHub/reinventing-test-and-trace-r/python/model-diagnostics/model-codes/base_model.stan')
+        self.model = None  
         self.ground_truth = None
         self.data = None
         self.posterior = None
@@ -43,9 +43,12 @@ class BaseModel:
     def run(self, iterations, warmup_iterations, chains):
         print('Running model...')
         start = time.time()
-        fit = self.model.sampling(data=self.data, iter=iterations, warmup=warmup_iterations, chains=chains)
+        self.model = stan.build('Desktop/GitHub/reinventing-test-and-trace-r/python/model-diagnostics/model-codes/base_model.stan', data=self.data, random_seed=1) 
+        fit = self.model.sample(num_samples=iterations, num_warmup=warmup_iterations, num_chains=chains)
         end = time.time()
         print('Finished running')
+        desc_fit = fit.to_frame().describe().T
+        error = np.sum((desc_fit.loc['mean', 'theta.1'] - self.ground_truth['true_theta']) ** 2)
         error = np.sum((np.mean(fit.extract()['theta'], axis=0) - self.ground_truth['true_theta']) ** 2)
         self.mse = error
         self.posterior = fit

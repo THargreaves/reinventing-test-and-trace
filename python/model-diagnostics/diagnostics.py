@@ -1,7 +1,7 @@
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
-import pystan
+import stan
 import arviz as arvz
 
 from models import BaseModel
