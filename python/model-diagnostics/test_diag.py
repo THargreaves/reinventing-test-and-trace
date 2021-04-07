@@ -8,3 +8,4 @@ a = 10**4
 Ns = [5*(10**5), a, 5*a, 10*a,50*a]
 diagnostics.runtime_lineplot_N(mod, N_space = Ns, P = 4)
 print('ahuevooooooooo')
+diagnostics.mse_lineplot_N(mod, N_space = Ns, P = 4)

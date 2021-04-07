@@ -3,6 +3,8 @@ import arviz
 import numpy as np
 import pandas as pd
 import stan
+import nest_asyncio
+nest_asyncio.apply()
 
 class BaseModel:
     def __init__ (self):
@@ -37,7 +39,7 @@ class BaseModel:
                              'true_theta':transmission_rate, 
                              'true_rho':base_rate}
         
-        self.data = {'N': N, 'P': P, 'X': X.to_numpy(), 'y': y.to_numpy()}
+        self.data = {'N': N, 'P': P, 'X': X.to_numpy(), 'y': y.to_numpy()} 
         
         
     def run(self, iterations, warmup_iterations, chains):
@@ -47,9 +49,12 @@ class BaseModel:
         fit = self.model.sample(num_samples=iterations, num_warmup=warmup_iterations, num_chains=chains)
         end = time.time()
         print('Finished running')
-        desc_fit = fit.to_frame().describe().T
-        error = np.sum((desc_fit.loc['mean', 'theta.1'] - self.ground_truth['true_theta']) ** 2)
-        error = np.sum((np.mean(fit.extract()['theta'], axis=0) - self.ground_truth['true_theta']) ** 2)
+        fit = fit.to_frame()
+        desc_fit = fit.describe().T
+        desc_fit = desc_fit['mean']
+        
+        error = np.mean((desc_fit.iloc[7:(self.data['P']+7)] - self.ground_truth['true_theta']) ** 2)
+        #error = np.sum((np.mean(fit.extract()['theta'], axis=0) - self.ground_truth['true_theta']) ** 2)
         self.mse = error
         self.posterior = fit
         self.runtime = (end - start) 

@@ -22,7 +22,8 @@ def runtime_lineplot_N(model, N_space, P=4):
     N_space = np.sort(np.array(N_space))
     runtimes = []
     for i in N_space:
-        model.simulate_data(i,P)
+        N = int(i)
+        model.simulate_data(N,P)
         model.run(iterations=1000, warmup_iterations=500, chains=4)
         runtimes.append(model.runtime)
     
@@ -96,12 +97,12 @@ def mse_lineplot(model, N_space, P=4):
         runtimes.append(model.runtime)
     
     fig, ax = plt.subplots()
-    ax.plot(P_space, runtimes, color='tab:blue')
+    ax.plot(N_space, runtimes, color='tab:red')
     ax.set_ylabel('Runtime')
-    ax.set_xlabel('Number of theta parameters')
-    ax.set_title('Model Runtime')
+    ax.set_xlabel('Number of fitting samples')
+    ax.set_title('Model MSE')
     fig.tight_layout()
-    plt.savefig('runtime_P_plot.png')
+    plt.savefig('mse_N_plot.png')
     plt.show()
     
     
