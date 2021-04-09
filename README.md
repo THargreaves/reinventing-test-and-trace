@@ -1,4 +1,6 @@
-# Reinventing Test and Trace: A Bayesian Approach For Estimating SARS-CoV-2 Setting-Specific Transmission Rates
+# Reinventing Test and Trace
+
+**_A Bayesian Approach For Estimating SARS-CoV-2 Setting-Specific Transmission Rates_**
 
 ## Abstract
 
